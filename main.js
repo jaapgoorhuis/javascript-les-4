@@ -161,3 +161,153 @@ const inventory = [
     sold: 8,
   },
 ];
+
+
+//1A
+const allResults = inventory.map((result) => {
+  return result;
+});
+
+/*console.log(allResults);*/
+
+//1B
+const soldProducts = inventory.filter((result) => {
+
+  if (result.originalStock === result.sold) {
+    return true;
+  }
+  return false;
+});
+
+/*console.log(soldProducts);*/
+
+//1C
+const options = inventory.filter((result) => {
+
+  if(result.options.ambiLight === true) {
+    return true;
+  }
+  return false;
+});
+
+/*console.log(options);*/
+
+//1D
+inventory.sort((a, b) => {
+  return a.price - b.price;
+});
+
+/*console.log(inventory);*/
+
+//2A
+
+let soldTvsPrice = 0;
+for(let i = 0; i < inventory.length; i++) {
+  soldTvsPrice+= inventory[i].price;
+};
+
+/*console.log(soldTvsPrice);*/
+//2B
+const element = document.getElementById('soldtvsprice');
+element.textContent = soldTvsPrice;
+
+//2C
+let stockTvs = 0;
+for(let i = 0; i < inventory.length; i++) {
+  stockTvs+= inventory[i].originalStock;
+};
+
+//console.log(stockTvs);
+
+//2D
+const element2 = document.getElementById('stocktvs');
+element2.textContent = stockTvs;
+
+//2C
+soldTvs = 0;
+for (let i = 0; i < inventory.length; i++) {
+  soldTvs+= inventory[i].sold;
+}
+
+let toBeSold = stockTvs - soldTvs;
+
+//console.log(toBeSold);
+
+//3A
+const tvBrands = inventory.map((result) => {
+  return result.brand;
+});
+
+const element3 = document.getElementById('tvbrands');
+element3.textContent = tvBrands;
+
+/*console.log(tvBrands);*/
+
+//3B
+function tvBrandsFunction() {
+  arrays = [tvBrands];
+  return arrays;
+}
+
+/*console.log(tvBrandsFunction());*/
+
+//4A
+function tvNameFunction(tvinfo) {
+  const tvname = `${tvinfo.brand} ${tvinfo.type} - ${tvinfo.name}`;
+  return tvname;
+}
+const printedTvName = tvNameFunction(inventory[2]);
+
+/*console.log(printedTvName);*/
+
+//4B
+function tvPriceFunction(tvprice) {
+  const tvPriceFormated = `\u20ac ${tvprice.price},-`;
+  return tvPriceFormated;
+}
+
+const printedTvPrice = tvPriceFunction(inventory[0]);
+/*console.log(printedTvPrice);*/
+
+//4C
+function tvSizeFunction(tvSize) {
+  let calculatedCms = [];
+  for (let i = 0; i < tvSize.length; i++) {
+    incheToCm = Math.round(tvSize[i] * 2.54);
+      calculatedCms.push(`${tvSize[i]} inch ( ${incheToCm} cm) `) ;
+  }
+  return calculatedCms;
+}
+
+const availableSizes = tvSizeFunction(inventory[3].availableSizes);
+/*console.log(availableSizes)*/
+
+//4D
+const tvTitle = document.getElementById('tvtitle');
+tvTitle.textContent = printedTvName;
+
+const tvprice = document.getElementById('tvprice');
+tvprice.textContent = printedTvPrice;
+
+const tvinche = document.getElementById('tvinche');
+tvinche.textContent = availableSizes.join('| ');
+
+//4E
+function allTvData(tvData) {
+  for (let i = 0; i < tvData.length; i++) {
+    tvname = tvNameFunction(tvData[i]);
+    tvprices = tvPriceFunction(tvData[i]);
+    tvinches = tvSizeFunction(tvData[i].availableSizes);
+
+    const div = document.createElement('div');
+    div.setAttribute('class', 'tvdata');
+    div.innerText = `${tvname} 
+                     ${tvprices}
+                     ${tvinches}
+                     
+                     `;
+    document.getElementById('alltvdata').appendChild(div);
+  }
+}
+
+allTvData(inventory);
